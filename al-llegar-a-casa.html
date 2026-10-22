@@ -70,18 +70,35 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--bloque-acento);outl
   .portada .foto{aspect-ratio:16/10}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== Páginas internas: mismo estilo que la portada ===== */
+html{background:#10201a}
+body.interna{background:transparent}
+body.interna::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(10,20,15,.62),rgba(10,20,15,.78)),var(--foto) center/cover no-repeat}
+.interna .cabecera{position:static;padding:0 0 32px;background:none;pointer-events:auto}
+.interna .cabecera h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin-bottom:22px}
+.cinta-volver{display:inline-block;width:auto;min-width:0;padding:12px 40px;font-size:1rem;text-decoration:none}
+.interna .cinta-volver:hover{filter:drop-shadow(0 4px 10px rgba(0,0,0,.3)) brightness(1.06)}
+.interna .tarjeta,.interna .tarjeta-ancha{box-shadow:0 10px 30px rgba(0,0,0,.28)}
+.tarjeta-ancha{background:var(--tarjeta);border-radius:22px;padding:clamp(22px,4vw,40px)}
+.tarjeta-ancha h2{font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:24px}
+@media (max-width:820px){.interna .cabecera{flex-direction:column}}
 </style>
 <script>try{if(localStorage.getItem("bpm-tema")==="oscuro")document.documentElement.setAttribute("data-tema","oscuro")}catch(e){}</script>
 <title>Al llegar a casa · BPM</title>
 </head>
-<body>
+<body class="interna" style="--foto:url('Imagenes/portada_2_png.png')">
 <main class="pagina">
-  <header class="encabezado">
+  <header class="cabecera">
     <div>
       <p class="etiqueta">BPM · Buenas Prácticas de Manufactura</p>
-      <a class="volver" href="index.html">← Volver al inicio</a>
+      <h1>Cuida tus alimentos antes y después de comprar</h1>
+      <a class="cinta cinta-volver" href="index.html">← Volver al inicio</a>
     </div>
-    <img class="logo" src="universidad_logo_png.png" alt="Logo de la universidad">
+    <div class="logos">
+      <img class="logo" src="Imagenes/universidad_logo_png.png" alt="Logo de la universidad">
+      <img class="logo" src="Imagenes/municipalidad_logo_png.png" alt="Logo de la municipalidad" onerror="this.remove()">
+    </div>
   </header>
   <section class="tarjeta">
     <h2>Al llegar a casa</h2>
