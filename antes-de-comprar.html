@@ -133,4 +133,13 @@ a.cinta:focus-visible{outline:3px solid var(--acento);outline-offset:3px}
   }
   var guardado = null;
   try { guardado = localStorage.getItem("bpm-tema"); } catch (e) {}
-  aplic
+  aplicar(guardado === "oscuro" ? "oscuro" : "claro");
+  if (boton) boton.addEventListener("click", function () {
+    var nuevo = raiz.getAttribute("data-tema") === "oscuro" ? "claro" : "oscuro";
+    aplicar(nuevo);
+    try { localStorage.setItem("bpm-tema", nuevo); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
