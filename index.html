@@ -6,37 +6,134 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/estilos.css">
+<style>
+:root{
+  --fondo:#f5f0e6; --tarjeta:#ffffff; --texto:#1c1c1a; --verde:#1f4f3d;
+  --acento:#b8461a; --acento-texto:#ffffff; --bloque:#1f4f3d; --bloque-texto:#ffffff;
+  --bloque-acento:#e9b27a; --borde:#1f4f3d; --linea:rgba(255,255,255,.2);
+}
+:root[data-tema="oscuro"]{
+  --fondo:#121815; --tarjeta:#1c2621; --texto:#ece8df; --verde:#8fd1b0;
+  --acento:#e0703f; --acento-texto:#121815; --bloque:#0b2a1e; --bloque-texto:#f1ede4;
+  --bloque-acento:#e9b27a; --borde:#8fd1b0; --linea:rgba(255,255,255,.18);
+}
+*{box-sizing:border-box;margin:0}
+html{color-scheme:light}
+:root[data-tema="oscuro"]{color-scheme:dark}
+body{background:var(--fondo);color:var(--texto);font-family:"Inter",system-ui,sans-serif;line-height:1.5;transition:background .25s,color .25s}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;color:var(--verde);line-height:1.1}
+.pagina{max-width:1100px;margin:0 auto;padding:clamp(20px,4vw,48px) clamp(16px,4vw,48px) 110px}
+
+/* Encabezado */
+.encabezado{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:36px}
+.etiqueta{color:var(--acento);font-weight:700;font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+.encabezado h1{font-size:clamp(2rem,5vw,3.6rem);font-weight:800;max-width:14em}
+.intro{margin-top:16px;max-width:42em;font-size:1.1rem}
+.logo{width:clamp(80px,14vw,150px);height:auto;flex-shrink:0}
+
+/* Portada */
+.portadas{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.portada{display:flex;flex-direction:column;gap:14px}
+.portada .foto{display:block;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--tarjeta);border:2px solid var(--borde)}
+.portada img{width:100%;height:100%;object-fit:cover;display:block}
+.boton{display:block;text-align:center;text-decoration:none;font-weight:700;font-size:1.1rem;padding:14px 18px;border-radius:14px;background:var(--acento);color:var(--acento-texto);transition:filter .2s}
+.boton:hover{filter:brightness(1.1)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--bloque-acento);outline-offset:3px}
+
+/* Subpáginas */
+.volver{display:inline-block;margin-bottom:24px;color:var(--verde);font-weight:600;text-decoration:none}
+.volver:hover{text-decoration:underline}
+.tarjeta{background:var(--tarjeta);border-radius:22px;padding:clamp(22px,4vw,40px);max-width:640px}
+.tarjeta h2{font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:24px}
+.pasos{list-style:none;padding:0;display:grid;gap:20px}
+.pasos li{display:flex;gap:16px;align-items:center;font-size:1.15rem}
+.num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--acento);color:var(--acento-texto);display:grid;place-items:center;font-weight:700}
+
+.desinfeccion{background:var(--bloque);color:var(--bloque-texto);border-radius:22px;padding:clamp(22px,4vw,40px);margin-top:28px}
+.desinfeccion .etiqueta{color:var(--bloque-acento)}
+.desinfeccion h2{color:var(--bloque-texto);font-size:clamp(1.8rem,4.5vw,2.8rem);margin-bottom:24px}
+.fases{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.fases .n{display:block;font-family:"Fraunces",Georgia,serif;font-size:2rem;color:var(--bloque-acento);margin-bottom:6px}
+.aviso{margin-top:24px;padding-top:18px;border-top:1px solid var(--linea)}
+
+.guardado{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.caja{border:2px solid var(--borde);border-radius:20px;padding:24px}
+.caja h3{font-size:1.6rem;margin-bottom:10px}
+
+/* Modo oscuro */
+.modo{position:fixed;right:20px;bottom:20px;z-index:10;border:2px solid var(--borde);background:var(--tarjeta);color:var(--verde);font:600 .95rem "Inter",sans-serif;padding:12px 18px;border-radius:999px;cursor:pointer}
+.modo:hover{filter:brightness(1.08)}
+
+@media (max-width:820px){
+  .portadas,.guardado{grid-template-columns:1fr}
+  .fases{grid-template-columns:repeat(2,1fr)}
+  .portada .foto{aspect-ratio:16/10}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== Portada a pantalla completa ===== */
+body.inicio{background:#1a1a18}
+.hero{position:relative;min-height:100vh;display:grid;grid-template-columns:repeat(3,1fr)}
+.panel{position:relative;display:grid;place-items:center;text-decoration:none;background-color:var(--bloque);background-size:cover;background-position:center;min-height:100vh}
+.panel::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .25s}
+.panel:hover::after{background:rgba(0,0,0,.12)}
+.panel:focus-visible{outline:4px solid var(--bloque-acento);outline-offset:-8px}
+.cinta{position:relative;z-index:1;width:min(78%,320px);text-align:center;padding:16px 34px;font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:clamp(1.15rem,2vw,1.6rem);color:var(--verde);background:var(--tarjeta);clip-path:polygon(0 0,100% 0,calc(100% - 16px) 50%,100% 100%,0 100%,16px 50%);filter:drop-shadow(0 4px 10px rgba(0,0,0,.3))}
+.cabecera{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:clamp(18px,3vw,36px) clamp(16px,4vw,48px) 90px;background:linear-gradient(to bottom,rgba(10,20,15,.82),rgba(10,20,15,0));color:#fff;pointer-events:none}
+.cabecera .etiqueta{color:var(--bloque-acento)}
+.cabecera h1{color:#fff;font-size:clamp(1.7rem,4vw,3rem);font-weight:800;max-width:15em}
+.cabecera .intro{font-size:1rem;max-width:40em;margin-top:12px}
+.logos{display:flex;gap:18px;align-items:center;flex-shrink:0}
+.logos .logo{width:clamp(70px,11vw,130px)}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .panel{min-height:34vh}
+  .cabecera{position:static;background:#10201a;padding-bottom:24px;flex-direction:column}
+}
+</style>
 <script>try{if(localStorage.getItem("bpm-tema")==="oscuro")document.documentElement.setAttribute("data-tema","oscuro")}catch(e){}</script>
 <title>Cuida tus alimentos antes y después de comprar</title>
 </head>
-<body>
-<main class="pagina">
-  <header class="encabezado">
+<body class="inicio">
+<main class="hero">
+  <header class="cabecera">
     <div>
       <p class="etiqueta">BPM · Buenas Prácticas de Manufactura</p>
       <h1>Cuida tus alimentos antes y después de comprar</h1>
       <p class="intro">Plan de contingencia con Buenas Prácticas de Manufactura (BPM) para frutas, verduras, carnes y mariscos: sigue estos pasos para que duren más y lleguen seguros a tu mesa.</p>
     </div>
-    <img class="logo" src="universidad_logo_png.png" alt="Logo de la universidad">
+    <div class="logos">
+      <img class="logo" src="universidad_logo_png.png" alt="Logo de la universidad">
+      <img class="logo" src="municipalidad_logo_png.png" alt="Logo de la municipalidad" onerror="this.remove()">
+    </div>
   </header>
 
-  <nav class="portadas" aria-label="Secciones">
-    <div class="portada">
-      <a class="foto" href="antes-de-comprar.html" tabindex="-1" aria-hidden="true"><img src="portada_1_png.png" alt=""></a>
-      <a class="boton" href="antes-de-comprar.html">Antes de Comprar</a>
-    </div>
-    <div class="portada">
-      <a class="foto" href="al-llegar-a-casa.html" tabindex="-1" aria-hidden="true"><img src="portada_2_png.png" alt=""></a>
-      <a class="boton" href="al-llegar-a-casa.html">Al llegar a Casa</a>
-    </div>
-    <div class="portada">
-      <a class="foto" href="como-guardarlos.html" tabindex="-1" aria-hidden="true"><img src="portada_3_png.png" alt=""></a>
-      <a class="boton" href="como-guardarlos.html">Cómo guardarlos</a>
-    </div>
-  </nav>
+  <a class="panel" href="antes-de-comprar.html" style="background-image:url('portada_1_png.png')"><span class="cinta">Antes de Comprar</span></a>
+  <a class="panel" href="al-llegar-a-casa.html" style="background-image:url('portada_2_png.png')"><span class="cinta">Al llegar a Casa</span></a>
+  <a class="panel" href="como-guardarlos.html" style="background-image:url('portada_3_png.png')"><span class="cinta">Cómo guardarlos</span></a>
 </main>
 <button class="modo" id="modo" type="button">☾ Modo oscuro</button>
-<script src="js/tema.js"></script>
+<script>
+(function () {
+  var raiz = document.documentElement;
+  var boton = document.getElementById("modo");
+  function aplicar(t) {
+    if (t === "oscuro") { raiz.setAttribute("data-tema", "oscuro"); }
+    else { raiz.removeAttribute("data-tema"); }
+    if (boton) {
+      boton.textContent = t === "oscuro" ? "☀ Modo claro" : "☾ Modo oscuro";
+      boton.setAttribute("aria-pressed", t === "oscuro");
+    }
+  }
+  var guardado = null;
+  try { guardado = localStorage.getItem("bpm-tema"); } catch (e) {}
+  aplicar(guardado === "oscuro" ? "oscuro" : "claro");
+  if (boton) boton.addEventListener("click", function () {
+    var nuevo = raiz.getAttribute("data-tema") === "oscuro" ? "claro" : "oscuro";
+    aplicar(nuevo);
+    try { localStorage.setItem("bpm-tema", nuevo); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>
